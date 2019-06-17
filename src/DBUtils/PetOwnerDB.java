@@ -4,20 +4,24 @@ import Dao.PetOwner;
 
 import java.sql.*;
 
-public class PetOwnerDB implements Connection<PetOwner> {
-    private Statement stmt;
-    private java.sql.Connection conn;
+public class PetOwnerDB extends Utils implements Connection<PetOwner> {
+
     public PetOwnerDB() throws Exception{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        //2. 获得数据库连接
-        this.conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        //3.操作数据库，实现增删改查
-        this.stmt = conn.createStatement();
+
 
     }
 
     @Override
-    public int insert(PetOwner petOwner) throws Exception {
+    public int insert(PetOwner petOwner){
+        if (petOwner.getId()==null){
+            try {
+                ResultSet rs = this.getAll();
+                rs.last();
+                petOwner.setId(rs.getInt("id")+1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         int i = 0;
         String sql = "insert into pet_owner (id,name,password,balance) values(?,?,?,?)";
         PreparedStatement pstmt;
@@ -40,10 +44,37 @@ public class PetOwnerDB implements Connection<PetOwner> {
     public ResultSet getAll() throws Exception {
         ResultSet rs = stmt.executeQuery("SELECT * FROM pet_owner");
         //如果有数据，rs.next()返回true
-        while(rs.next()){
-            System.out.println(rs);
-        }
         return rs;
+    }
+
+    public PetOwner getByName(String name) throws Exception{
+        String sql = "SELECT password FROM pet_owner where name=?";
+        ResultSet rs;
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,name);
+
+            rs = pstmt.executeQuery();
+            PetOwner petOwner = new PetOwner();
+
+            if (rs.next()){
+
+                petOwner.setId(rs.getInt("id"));
+                petOwner.setName(rs.getString("name"));
+                petOwner.setPassword(rs.getString("password"));
+                petOwner.setBalance(rs.getDouble("balance"));
+                pstmt.close();
+                return petOwner;
+
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     @Override

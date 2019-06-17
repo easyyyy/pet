@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class Deal {
     private Integer id;
-    private String dealType;
+    private Integer dealType;
     private Integer petId;
     private Integer sellerId;
     private Integer goodsId;
     private Integer buyerId;
     private Double price;
-    private Date dealTime;
+    private Date dealTime = new Date();
 
     public Deal() {
     }
 
-    public Deal(Integer id, String dealType, Integer petId, Integer sellerId, Integer goodsId, Integer buyerId, Double price, Date dealTime) {
+    public Deal(Integer id, Integer  dealType, Integer petId, Integer sellerId, Integer goodsId, Integer buyerId, Double price, Date dealTime) {
         this.id = id;
         this.dealType = dealType;
         this.petId = petId;
@@ -48,11 +48,11 @@ public class Deal {
         this.id = id;
     }
 
-    public String getDealType() {
+    public Integer  getDealType() {
         return dealType;
     }
 
-    public void setDealType(String dealType) {
+    public void setDealType(Integer  dealType) {
         this.dealType = dealType;
     }
 

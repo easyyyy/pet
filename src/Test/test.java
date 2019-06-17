@@ -1,12 +1,5 @@
 package Test;
-import DBUtils.PetDB;
-import DBUtils.PetOwnerDB;
-import Dao.Pet;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import service.User;
 
 public class test {
 
@@ -26,11 +19,16 @@ public class test {
 //        while(rs.next()){
 //            System.out.println(rs.getString(1));
 //        }
-        PetDB petDB = new PetDB();
-        petDB.getAll();
-        PetOwnerDB petOwnerDB = new PetOwnerDB();
-        petOwnerDB.getAll();
+//        GoodsDB goodsDB = new GoodsDB();
+//        goodsDB.getAll();
+//        PetDB petDB = new PetDB();
+//        ResultSet rs = petDB.getAll();
+//        while(rs.next()){
+//            System.out.println(rs.getString("name"));
+//        }
 
+        User login = new User();
+        login.loginByOwner();
     }
 
 }

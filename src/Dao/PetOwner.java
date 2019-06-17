@@ -3,7 +3,7 @@ package Dao;
 import java.util.List;
 
 public class PetOwner {
-    private Integer id;
+    private Integer id = null;
     private String name;
     private String password;
     private Double balance = 0.0;
