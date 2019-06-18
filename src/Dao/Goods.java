@@ -5,6 +5,15 @@ public class Goods {
     private String name;
     private Double price;
     private Integer number;
+    private Integer storeId;
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer store_id) {
+        this.storeId = store_id;
+    }
 
     public Goods() {
     }

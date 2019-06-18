@@ -23,6 +23,24 @@ public class PetStoreService {
 
     }
 
+    public List<PetStore> getAllStore(){
+        try {
+
+            List<PetStore> petStoreList = new ArrayList<>();
+            ResultSet rs = petStoreDB.getAll();
+            while (rs.next()){
+                PetStore petStore = new PetStore();
+                petStore.setId(rs.getInt("id"));
+                petStore.setName(rs.getString("name"));
+                petStoreList.add(petStore);
+            }
+            return petStoreList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public void registerStore(){
         Scanner in = new Scanner(System.in);
@@ -84,10 +102,8 @@ public class PetStoreService {
                 pet.setTypeName(rs.getString("type_name"));
                 pet.setPrice(rs.getDouble("price"));
                 pet.setHealth(rs.getString("health"));
-                System.out.println(pet);
                 pets.add(pet);
             }
-            System.out.println(pets);
             return pets;
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,18 +111,19 @@ public class PetStoreService {
         return null;
     }
 
-    public void printNotSellPet(Integer storeId){
+    public List<Pet> printNotSellPet(Integer storeId){
         List<Pet> pets = getNotSellPets(storeId);
 
         for (Pet pet:pets){
             System.out.println("------------------------");
-            System.out.println("宠物ID:"+pet.getId());
-            System.out.println("宠物名："+pet.getName());
-            System.out.println("种类："+pet.getTypeName());
-            System.out.println("健康："+pet.getHealth());
-            System.out.println("生日："+pet.getBirthday());
-            System.out.println("价格："+pet.getPrice());
+            System.out.println("    宠物ID:"+pet.getId());
+            System.out.println("    宠物名："+pet.getName());
+            System.out.println("    种类："+pet.getTypeName());
+            System.out.println("    健康："+pet.getHealth());
+            System.out.println("    生日："+pet.getBirthday());
+            System.out.println("    价格："+pet.getPrice());
             System.out.println("------------------------");
         }
+        return pets;
     }
 }

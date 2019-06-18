@@ -47,8 +47,9 @@ public class test {
 
 //        petOwnerService.getInfoById(1);
 
-        PetStoreService petStoreService = new PetStoreService();
-        petStoreService.printNotSellPet(1);
+//        PetStoreService petStoreService = new PetStoreService();
+//        petStoreService.printNotSellPet(1);
+
 
     }
 

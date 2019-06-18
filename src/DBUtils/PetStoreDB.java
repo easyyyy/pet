@@ -34,6 +34,20 @@ public class PetStoreDB extends Utils implements Connection<PetStore> {
         return rs;
     }
 
+    public String getStoreNameById(Integer id){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT name FROM pet_store where id="+id);
+            while (rs.next()){
+                String name = rs.getString("name");
+                return name;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public PetStore getByName(String name) throws Exception{
         String sql = "SELECT * FROM pet_store where name=?";
         ResultSet rs;
