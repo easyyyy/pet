@@ -1,5 +1,13 @@
 package Test;
-import service.User;
+import DBUtils.PetDB;
+import DBUtils.PetStoreDB;
+import Dao.Pet;
+import Dao.PetStore;
+import service.PetOwnerService;
+import service.PetStoreService;
+
+import java.sql.Date;
+import java.sql.ResultSet;
 
 public class test {
 
@@ -27,8 +35,21 @@ public class test {
 //            System.out.println(rs.getString("name"));
 //        }
 
-        User login = new User();
-        login.loginByOwner();
+//        PetOwnerService petOwnerService = new PetOwnerService();
+////        petOwnerService.changeBalance(petOwnerService.loginByOwner());
+//        Pet pet = new Pet(3,"lin","dog","good",1,1,1,100.0);
+//////        PetDB petDB = new PetDB();
+//////        ResultSet rs = petDB.getById(3);
+//////        while (rs.next()){
+//////            System.out.println(rs);
+//////        }
+//        petOwnerService.buyingPet(petOwnerService.loginByOwner(),pet);
+
+//        petOwnerService.getInfoById(1);
+
+        PetStoreService petStoreService = new PetStoreService();
+        petStoreService.printNotSellPet(1);
+
     }
 
 }

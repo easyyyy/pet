@@ -11,6 +11,26 @@ public class Pet {
     private Date birthday = new Date();
     private int ownerId = 0;
     private int storeId;
+    private Double price;
+
+    public Pet(int id, String name, String typeName, String health, int love, int ownerId, int storeId, Double price) {
+        this.id = id;
+        this.name = name;
+        this.typeName = typeName;
+        this.health = health;
+        this.love = love;
+        this.ownerId = ownerId;
+        this.storeId = storeId;
+        this.price = price;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Pet() {
     }
@@ -92,7 +112,7 @@ public class Pet {
         return ownerId;
     }
 
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
 

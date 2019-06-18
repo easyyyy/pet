@@ -5,9 +5,9 @@ import java.util.Date;
 public class Deal {
     private Integer id;
     private Integer dealType;
-    private Integer petId;
+    private Integer petId = null;
     private Integer sellerId;
-    private Integer goodsId;
+    private Integer goodsId = 0;
     private Integer buyerId;
     private Double price;
     private Date dealTime = new Date();

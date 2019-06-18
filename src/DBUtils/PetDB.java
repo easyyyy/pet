@@ -39,9 +39,14 @@ public class PetDB extends Utils implements Connection<Pet> {
     public ResultSet getAll() throws Exception {
         ResultSet rs = stmt.executeQuery("SELECT * FROM pet");
         //如果有数据，rs.next()返回true
-
         return rs;
 
+    }
+
+    public ResultSet getById(Integer id) throws Exception{
+        ResultSet rs = stmt.executeQuery("SELECT * FROM pet where id="+id);
+        //如果有数据，rs.next()返回true
+        return rs;
     }
 
     @Override

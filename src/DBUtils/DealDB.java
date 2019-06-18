@@ -13,7 +13,7 @@ public class DealDB extends Utils implements Connection<Deal> {
 
     @Override
     public int insert(Deal deal) throws Exception {
-        String sql = "insert into deal (id,deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time) values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into deal (deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time) values(?,?,?,?,?,?,?)";
         return dealSQL(sql,deal);
     }
 

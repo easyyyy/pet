@@ -26,10 +26,9 @@ public class Utils {
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, petStore.getId());
-            pstmt.setString(2, petStore.getName());
-            pstmt.setString(3, petStore.getPassword());
-            pstmt.setDouble(4, petStore.getBalance());
+            pstmt.setString(1, petStore.getName());
+            pstmt.setString(2, petStore.getPassword());
+            pstmt.setDouble(3, petStore.getBalance());
             i = pstmt.executeUpdate();
 
             pstmt.close();
@@ -44,14 +43,15 @@ public class Utils {
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, deal.getId());
-            pstmt.setInt(2, deal.getDealType());
-            pstmt.setInt(3, deal.getPetId());
-            pstmt.setInt(4, deal.getGoodsId());
-            pstmt.setInt(5, deal.getSellerId());
-            pstmt.setInt(6, deal.getBuyerId());
-            pstmt.setDouble(7, deal.getPrice());
-            pstmt.setTimestamp(8,  new Timestamp(deal.getDealTime().getTime()));
+
+            pstmt.setInt(1, deal.getDealType());
+            pstmt.setInt(2, deal.getPetId());
+
+            pstmt.setInt(3, deal.getGoodsId());
+            pstmt.setInt(4, deal.getSellerId());
+            pstmt.setInt(5, deal.getBuyerId());
+            pstmt.setDouble(6, deal.getPrice());
+            pstmt.setTimestamp(7,  new Timestamp(deal.getDealTime().getTime()));
             i = pstmt.executeUpdate();
 
             pstmt.close();

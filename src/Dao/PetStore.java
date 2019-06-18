@@ -4,7 +4,7 @@ public class PetStore {
     private Integer id;
     private String name;
     private String password;
-    private Double balance;
+    private Double balance = 0.0;
 
     public PetStore() {
     }

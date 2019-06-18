@@ -48,7 +48,7 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
     }
 
     public PetOwner getByName(String name) throws Exception{
-        String sql = "SELECT password FROM pet_owner where name=?";
+        String sql = "SELECT * FROM pet_owner where name=?";
         ResultSet rs;
         PreparedStatement pstmt;
         try {
@@ -76,6 +76,30 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
         return null;
 
     }
+
+    public ResultSet getPetByOwnerId(Integer id){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM pet where owner_id="+id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //如果有数据，rs.next()返回true
+        return rs;
+    }
+
+    public ResultSet getById(Integer id){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM pet_owner where id="+id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //如果有数据，rs.next()返回true
+        return rs;
+    }
+
+
 
     @Override
     public int update(PetOwner petOwner) throws Exception {
