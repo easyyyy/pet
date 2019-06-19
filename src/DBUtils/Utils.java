@@ -52,6 +52,9 @@ public class Utils {
             pstmt.setInt(5, deal.getBuyerId());
             pstmt.setDouble(6, deal.getPrice());
             pstmt.setTimestamp(7,  new Timestamp(deal.getDealTime().getTime()));
+            pstmt.setString(8, deal.getAddress());
+            pstmt.setString(9, deal.getPhone());
+            pstmt.setInt(10, deal.getSign());
             i = pstmt.executeUpdate();
 
             pstmt.close();

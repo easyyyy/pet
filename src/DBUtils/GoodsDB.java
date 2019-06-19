@@ -1,6 +1,7 @@
 package DBUtils;
 
 import Dao.Goods;
+import Dao.PetStore;
 
 import java.sql.*;
 
@@ -12,14 +13,14 @@ public class GoodsDB extends Utils implements Connection<Goods> {
     @Override
     public int insert(Goods goods) throws Exception {
         int i = 0;
-        String sql = "insert into goods (id,name,price,number,store_id) values(?,?,?,?,?)";
+        String sql = "insert into goods (name,price,number,store_id) values(?,?,?,?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, goods.getId());
-            pstmt.setString(2, goods.getName());
-            pstmt.setDouble(3, goods.getPrice());
-            pstmt.setInt(4, goods.getNumber());
+            pstmt.setString(1, goods.getName());
+            pstmt.setDouble(2, goods.getPrice());
+            pstmt.setInt(3, goods.getNumber());
+            pstmt.setInt(4, goods.getStoreId());
             i = pstmt.executeUpdate();
 
             pstmt.close();

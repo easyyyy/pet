@@ -5,12 +5,15 @@ import java.util.Date;
 public class Deal {
     private Integer id;
     private Integer dealType;
-    private Integer petId = null;
+    private Integer petId = 0;
     private Integer sellerId;
     private Integer goodsId = 0;
     private Integer buyerId;
     private Double price;
     private Date dealTime = new Date();
+    private String address;
+    private String phone;
+    private Integer sign = 0;
 
     public Deal() {
     }
@@ -38,6 +41,22 @@ public class Deal {
                 ", price=" + price +
                 ", dealTime=" + dealTime +
                 '}';
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Integer getId() {
@@ -102,5 +121,13 @@ public class Deal {
 
     public void setDealTime(Date dealTime) {
         this.dealTime = dealTime;
+    }
+
+    public Integer getSign() {
+        return sign;
+    }
+
+    public void setSign(Integer sign) {
+        this.sign = sign;
     }
 }

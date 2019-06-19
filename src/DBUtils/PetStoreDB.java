@@ -27,7 +27,7 @@ public class PetStoreDB extends Utils implements Connection<PetStore> {
     public ResultSet getNotSellPet(Integer storeId){
         ResultSet rs = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM pet where owner_id is null and store_id="+ storeId);
+            rs = stmt.executeQuery("SELECT * FROM pet where owner_id=0 and store_id="+ storeId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

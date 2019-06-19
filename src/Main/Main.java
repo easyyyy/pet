@@ -3,10 +3,7 @@ package Main;
 import Dao.Pet;
 import Dao.PetOwner;
 import Dao.PetStore;
-import service.GoodsService;
-import service.PetOwnerService;
-import service.PetService;
-import service.PetStoreService;
+import service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +14,9 @@ public class Main {
     PetStoreService petStoreService = new PetStoreService();
     GoodsService goodsService = new GoodsService();
     PetService petService = new PetService();
+    DealService dealService = new DealService();
     PetOwner loginPetOwner;
+    PetStore loginPetStore;
     Scanner in = new Scanner(System.in);
 
     public void sellPet(){
@@ -63,9 +62,11 @@ public class Main {
             System.out.println("1.查看自身信息");
             System.out.println("2.购买宠物");
             System.out.println("3.购买宠物用品");
-            System.out.println("4.出售宠物");
+            System.out.println("4.查看订单");
             System.out.println("5.余额充值");
-            System.out.println("6.退出");
+            System.out.println("6.修改收货地址");
+            System.out.println("7.修改联系电话");
+            System.out.println("8.退出");
             System.out.println("-----------------");
 
             int op = in.nextInt();
@@ -80,13 +81,115 @@ public class Main {
                     buyingGoods();
                     break;
                 case 4:
-                    sellPet();
+                    try {
+                        dealService.printListDeal(loginPetOwner, dealService.getDealByBuyerId(loginPetOwner.getId()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 5:
                     petOwnerService.changeBalance(loginPetOwner);
                     break;
                 case 6:
+                    loginPetOwner = petOwnerService.setAddress(loginPetOwner);
+                    break;
+                case 7:
+                    loginPetOwner = petOwnerService.setPhone(loginPetOwner);
+                    break;
+                case 8:
                     flag=false;
+                    break;
+            }
+        }
+    }
+
+    public void storeGoodsInfoMneu(){
+        boolean flag = true;
+        while (flag){
+            System.out.println("1.上架商品");
+            System.out.println("2.修改商品信息");
+            System.out.println("3.删除商品");
+            System.out.println("4.返回");
+            int op = in.nextInt();
+            switch (op){
+                case 1:
+                    goodsService.addGood(loginPetStore);
+                    break;
+                case 2:
+                    goodsService.updateGoods(loginPetStore);
+                    break;
+                case 3:
+                    goodsService.deleteGood(loginPetStore);
+                    break;
+                case 4:
+                    flag = false;
+                    break;
+            }
+        }
+    }
+
+    public void storePetInfoMenu(){
+
+        boolean flag = true;
+        while (flag){
+            System.out.println("1.上架宠物");
+            System.out.println("2.修改宠物信息");
+            System.out.println("3.删除宠物");
+            System.out.println("4.返回");
+            int op = in.nextInt();
+            switch (op){
+                case 1:
+                    petService.addPet(loginPetStore);break;
+                case 2:
+                    petService.updatePet(loginPetStore);
+                    break;
+                case 3:
+                    petService.deletePet(loginPetStore);
+                    break;
+                case 4:
+                    flag = false;
+                    break;
+            }
+        }
+
+    }
+
+
+
+
+    public void loginStoreMenu(){
+        boolean flag = true;
+        while (flag) {
+            System.out.println("-----------------");
+            System.out.println("1.商店信息");
+            System.out.println("2.宠物信息");
+            System.out.println("3.宠物用品");
+            System.out.println("4.查看订单");
+            System.out.println("5.余额提现");
+            System.out.println("6.退出");
+            System.out.println("-----------------");
+
+            int op = in.nextInt();
+            switch (op){
+                case 1:
+                    petStoreService.printStoreInfo(loginPetStore);
+                    break;
+                case 2:
+                    petStoreService.printNotSellPet(loginPetStore.getId());
+                    storePetInfoMenu();
+                    break;
+                case 3:
+                    goodsService.printGoodsByStoreId(loginPetStore);
+                    storeGoodsInfoMneu();
+                    break;
+                case 4:
+                    dealService.printStoreDeal(loginPetStore);
+                    break;
+                case 5:
+                    loginPetStore = petStoreService.withDrawBalance(loginPetStore);
+                    break;
+                case 6:
+                    flag = false;
                     break;
             }
         }
@@ -104,10 +207,19 @@ public class Main {
             int op = in.nextInt();
             switch (op){
                 case 1:
+
                     loginPetOwner = petOwnerService.loginByOwner();
+                    if (loginPetOwner==null){
+                        break;
+                    }
                     loginOwnerMenu();
                     break;
                 case 2:
+                    loginPetStore = petStoreService.loginStore();
+                    if (loginPetStore==null){
+                        break;
+                    }
+                    loginStoreMenu();
                     break;
                 case 3:
                     flag=false;
@@ -117,12 +229,36 @@ public class Main {
 
     }
 
+    public void registerOwnerOrStore(){
+        boolean flag = true;
+        while (flag){
+            System.out.println("-----------------");
+            System.out.println("1.用户注册");
+            System.out.println("2.商店注册");
+            System.out.println("3.返回");
+            System.out.println("-----------------");
+
+            int op = in.nextInt();
+            switch (op){
+                case 1:
+                    petOwnerService.registerOwner();
+                    break;
+                case 2:
+                    petStoreService.registerStore();
+                    break;
+                case 3:
+                    flag=false;
+                    break;
+            }
+        }
+    }
+
     public void loginSwitch(){
 
         boolean flag = true;
         while (flag){
             System.out.println("欢迎来到宠物商店系统");
-            System.out.println("请先登录");
+            System.out.println("选择操作");
             System.out.println("1.登录");
             System.out.println("2.注册");
             System.out.println("3.退出");
@@ -133,6 +269,7 @@ public class Main {
                     loginOwnerOrStore();
                     break;
                 case 2:
+                    registerOwnerOrStore();
                     break;
                 case 3:
                     flag = false;

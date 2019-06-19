@@ -5,6 +5,7 @@ import DBUtils.PetStoreDB;
 import Dao.Pet;
 import Dao.PetOwner;
 import Dao.PetStore;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class PetStoreService {
 
     PetStoreDB petStoreDB;
+    Scanner in = new Scanner(System.in);
     {
         try {
             petStoreDB = new PetStoreDB();
@@ -43,7 +45,7 @@ public class PetStoreService {
 
 
     public void registerStore(){
-        Scanner in = new Scanner(System.in);
+
         PetStore petStore = new PetStore();
         System.out.println("请输入商店名：");
         petStore.setName(in.next());
@@ -125,5 +127,58 @@ public class PetStoreService {
             System.out.println("------------------------");
         }
         return pets;
+    }
+
+    public void printStoreInfo(PetStore petStore){
+        boolean flag = true;
+        while (flag){
+            System.out.println("");
+            System.out.println("商店ID："+petStore.getId());
+            System.out.println("商店名称："+petStore.getName());
+            System.out.println("余额："+petStore.getBalance());
+            System.out.println("");
+            System.out.println("是否要修改商店名称?(y/N)");
+            String op = in.next();
+            if (!op.equals("y")){
+                flag = false;
+            }else {
+                System.out.println("输入新名称：");
+                String name = in.next();
+                petStore.setName(name);
+                try {
+                    int i = petStoreDB.update(petStore);
+                    if (i==0){
+                        System.out.println("修改失败！");
+                        return;
+                    }
+                    System.out.println("修改成功!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public PetStore withDrawBalance(PetStore petStore){
+        PetStore petStore1 = petStore;
+        System.out.println("请输入要提现的金额：");
+        double money = in.nextDouble();
+        if (petStore.getBalance()-money<0){
+            System.out.println("余额不足！无法提现");
+            return petStore;
+        }
+        petStore.setBalance(petStore.getBalance()-money);
+        try {
+            int i = petStoreDB.update(petStore);
+            if (i==0){
+                System.out.println("提现失败！");
+                return petStore1;
+            }
+            System.out.println("提现成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return petStore;
     }
 }

@@ -13,20 +13,34 @@ public class DealDB extends Utils implements Connection<Deal> {
 
     @Override
     public int insert(Deal deal) throws Exception {
-        String sql = "insert into deal (deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time) values(?,?,?,?,?,?,?)";
+        String sql = "insert into deal (deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time,address,phone,sign) values(?,?,?,?,?,?,?,?,?,?)";
         return dealSQL(sql,deal);
     }
 
     @Override
     public ResultSet getAll() throws Exception {
         ResultSet rs = stmt.executeQuery("SELECT * FROM deal");
+        return rs;
+    }
 
+    public ResultSet getDealByBuyerId(Integer id) throws Exception {
+        ResultSet rs = stmt.executeQuery("SELECT * FROM deal where buyer_id="+id);
+        return rs;
+    }
+
+    public ResultSet getDealByStoreId(Integer id) throws Exception {
+        ResultSet rs = stmt.executeQuery("SELECT * FROM deal where seller_id="+id);
+        return rs;
+    }
+
+    public ResultSet getDealById(Integer id) throws Exception {
+        ResultSet rs = stmt.executeQuery("SELECT * FROM deal where id="+id);
         return rs;
     }
 
     @Override
     public int update(Deal deal) throws Exception {
-        String sql = "update deal set id=?,deal_type=?,pet_id=?,goods_id=?,seller_id=?,buyer_id=?,price=?,deal_time=? where id="+deal.getId();
+        String sql = "update deal set deal_type=?,pet_id=?,goods_id=?,seller_id=?,buyer_id=?,price=?,deal_time=?,address=?,phone=?,sign=? where id="+deal.getId();
         return dealSQL(sql,deal);
     }
 

@@ -23,7 +23,7 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
             }
         }
         int i = 0;
-        String sql = "insert into pet_owner (id,name,password,balance) values(?,?,?,?)";
+        String sql = "insert into pet_owner (id,name,password,balance,address,phone) values(?,?,?,?,?,?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -31,6 +31,8 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
             pstmt.setString(2,petOwner.getName());
             pstmt.setString(3, petOwner.getPassword());
             pstmt.setDouble(4, petOwner.getBalance());
+            pstmt.setString(5, petOwner.getAddress());
+            pstmt.setString(6, petOwner.getPhone());
             i = pstmt.executeUpdate();
 
             pstmt.close();
@@ -64,6 +66,8 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
                 petOwner.setName(rs.getString("name"));
                 petOwner.setPassword(rs.getString("password"));
                 petOwner.setBalance(rs.getDouble("balance"));
+                petOwner.setAddress(rs.getString("address"));
+                petOwner.setAddress(rs.getString("phone"));
                 pstmt.close();
                 return petOwner;
 
@@ -104,7 +108,7 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
     @Override
     public int update(PetOwner petOwner) throws Exception {
         int i = 0;
-        String sql = "update pet_owner set id=?,name=?,password=?,balance=? where id="+petOwner.getId();
+        String sql = "update pet_owner set id=?,name=?,password=?,balance=?,address=?,phone=? where id="+petOwner.getId();
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -112,6 +116,8 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
             pstmt.setString(2,petOwner.getName());
             pstmt.setString(3, petOwner.getPassword());
             pstmt.setDouble(4, petOwner.getBalance());
+            pstmt.setString(5, petOwner.getAddress());
+            pstmt.setString(6, petOwner.getPhone());
             i = pstmt.executeUpdate();
 
             pstmt.close();

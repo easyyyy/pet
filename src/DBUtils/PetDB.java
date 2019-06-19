@@ -13,7 +13,7 @@ public class PetDB extends Utils implements Connection<Pet> {
     @Override
     public int insert(Pet pet) throws Exception {
         int i = 0;
-        String sql = "insert into pet (id,name,type_name,health,love,birthday,owner_id,store_id) values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into pet (id,name,type_name,health,love,birthday,owner_id,store_id,price) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -25,6 +25,7 @@ public class PetDB extends Utils implements Connection<Pet> {
             pstmt.setTimestamp(6, new Timestamp(pet.getBirthday().getTime()));
             pstmt.setInt(7, pet.getOwnerId());
             pstmt.setInt(8, pet.getStoreId());
+            pstmt.setDouble(9, pet.getPrice());
             i = pstmt.executeUpdate();
 
             pstmt.close();
@@ -52,7 +53,7 @@ public class PetDB extends Utils implements Connection<Pet> {
     @Override
     public int update(Pet pet) throws Exception {
         int i = 0;
-        String sql = "update pet set id=?,name=?,type_name=?,health=?,love=?,birthday=?,owner_id=?,store_id=? where id="+pet.getId();
+        String sql = "update pet set id=?,name=?,type_name=?,health=?,love=?,birthday=?,owner_id=?,store_id=?,price=? where id="+pet.getId();
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -64,6 +65,7 @@ public class PetDB extends Utils implements Connection<Pet> {
             pstmt.setTimestamp(6, new Timestamp(pet.getBirthday().getTime()));
             pstmt.setInt(7, pet.getOwnerId());
             pstmt.setInt(8, pet.getStoreId());
+            pstmt.setDouble(9, pet.getPrice());
 
             i = pstmt.executeUpdate();
             pstmt.close();

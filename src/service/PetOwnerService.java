@@ -21,7 +21,7 @@ public class PetOwnerService {
     PetOwnerDB petOwnerDB;
     PetDB petDB;
     DealDB dealDB;
-
+    Scanner in = new Scanner(System.in);
 
     {
         try {
@@ -34,7 +34,33 @@ public class PetOwnerService {
 
     }
 
+    public PetOwner setAddress(PetOwner petOwner){
+        System.out.println("请输入新地址：");
+        String address = in.next();
+        petOwner.setAddress(address);
+        try {
+            petOwnerDB.update(petOwner);
+            System.out.println("修改成功！");
+            return petOwner;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public PetOwner setPhone(PetOwner petOwner){
+        System.out.println("请输入新联系电话：");
+        String phone = in.next();
+        petOwner.setPhone(phone);
+        try {
+            petOwnerDB.update(petOwner);
+            System.out.println("修改成功！");
+            return petOwner;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public PetOwner loginByOwner(){
         Scanner in = new Scanner(System.in);
@@ -111,6 +137,8 @@ public class PetOwnerService {
         deal.setSellerId(pet.getStoreId());
         deal.setBuyerId(petOwner.getId());
         deal.setPrice(pet.getPrice());
+        deal.setAddress(petOwner.getAddress());
+        deal.setPhone(petOwner.getPhone());
 
 
         pet.setOwnerId(petOwner.getId());
@@ -207,6 +235,10 @@ public class PetOwnerService {
             System.out.println("昵称："+petOwner.getName());
 
             System.out.println("余额："+petOwner.getBalance());
+
+            System.out.println("收货地址："+petOwner.getAddress());
+
+            System.out.println("联系电话："+petOwner.getPhone());
 
             System.out.println("宠物信息：");
             printListPets(getPetByOwnerId(petOwner.getId()));

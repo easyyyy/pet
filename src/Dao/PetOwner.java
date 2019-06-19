@@ -7,6 +7,8 @@ public class PetOwner {
     private String name;
     private String password;
     private Double balance = 0.0;
+    private String address;
+    private String phone;
     private List<Integer> petsList;
 
     @Override
@@ -69,5 +71,21 @@ public class PetOwner {
 
     public void setPetsList(List<Integer> petsList) {
         this.petsList = petsList;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
