@@ -1,5 +1,6 @@
 package Main;
 
+import Dao.Hospital;
 import Dao.Pet;
 import Dao.PetOwner;
 import Dao.PetStore;
@@ -15,8 +16,10 @@ public class Main {
     GoodsService goodsService = new GoodsService();
     PetService petService = new PetService();
     DealService dealService = new DealService();
+    HospitalService hospitalService = new HospitalService();
     PetOwner loginPetOwner;
     PetStore loginPetStore;
+    Hospital loginHospital;
     Scanner in = new Scanner(System.in);
 
     public void sellPet(){
@@ -52,7 +55,10 @@ public class Main {
         if (op==0){
             return;
         }
-        goodsService.buyingGoodsById(loginPetOwner,op);
+        System.out.println("购买商品数量:");
+        Integer num = in.nextInt();
+        goodsService.buyingGoodsById(loginPetOwner,op,num);
+
     }
 
     public void loginOwnerMenu(){
@@ -66,7 +72,9 @@ public class Main {
             System.out.println("5.余额充值");
             System.out.println("6.修改收货地址");
             System.out.println("7.修改联系电话");
-            System.out.println("8.退出");
+            System.out.println("8.宠物就医");
+            System.out.println("9.查看诊断单");
+            System.out.println("10.退出");
             System.out.println("-----------------");
 
             int op = in.nextInt();
@@ -97,6 +105,12 @@ public class Main {
                     loginPetOwner = petOwnerService.setPhone(loginPetOwner);
                     break;
                 case 8:
+                    petOwnerService.seekMedicalAttention(loginPetOwner);
+                    break;
+                case 9:
+                    petOwnerService.printMedicalCertificate(loginPetOwner);
+                    break;
+                case 10:
                     flag=false;
                     break;
             }
@@ -195,13 +209,44 @@ public class Main {
         }
     }
 
+    public void loginHospitalMenu(){
+        boolean flag = true;
+        while (flag){
+            System.out.println("-----------------");
+            System.out.println("1.医院信息");
+            System.out.println("2.待诊断宠物");
+            System.out.println("3.所有诊断单");
+
+            System.out.println("4.退出");
+            System.out.println("-----------------");
+
+            int op = in.nextInt();
+            switch (op){
+                case 1:
+                    hospitalService.printHospitalInfo(loginHospital);
+                    break;
+                case 2:
+                    hospitalService.waitDiagnosis(loginHospital);
+                    break;
+                case 3:
+                    hospitalService.allDiagnosis(loginHospital);
+                    break;
+
+                case 4:
+                    flag = false;
+                    break;
+            }
+        }
+    }
+
     public void loginOwnerOrStore(){
         boolean flag = true;
         while (flag){
             System.out.println("-----------------");
             System.out.println("1.用户登录");
             System.out.println("2.商店登录");
-            System.out.println("3.返回");
+            System.out.println("3.医院登陆");
+            System.out.println("4.返回");
             System.out.println("-----------------");
 
             int op = in.nextInt();
@@ -222,6 +267,13 @@ public class Main {
                     loginStoreMenu();
                     break;
                 case 3:
+                    loginHospital = hospitalService.loginByHospital();
+                    if (loginHospital==null){
+                        break;
+                    }
+                    loginHospitalMenu();
+                    break;
+                case 4:
                     flag=false;
                     break;
             }
@@ -235,6 +287,7 @@ public class Main {
             System.out.println("-----------------");
             System.out.println("1.用户注册");
             System.out.println("2.商店注册");
+            System.out.println("2.医院注册");
             System.out.println("3.返回");
             System.out.println("-----------------");
 
@@ -247,6 +300,9 @@ public class Main {
                     petStoreService.registerStore();
                     break;
                 case 3:
+                    hospitalService.registerHospital();
+                    break;
+                case 4:
                     flag=false;
                     break;
             }

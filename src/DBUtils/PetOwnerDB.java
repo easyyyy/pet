@@ -67,7 +67,7 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
                 petOwner.setPassword(rs.getString("password"));
                 petOwner.setBalance(rs.getDouble("balance"));
                 petOwner.setAddress(rs.getString("address"));
-                petOwner.setAddress(rs.getString("phone"));
+                petOwner.setPhone(rs.getString("phone"));
                 pstmt.close();
                 return petOwner;
 

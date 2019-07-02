@@ -44,6 +44,7 @@ public class GoodsDB extends Utils implements Connection<Goods> {
 
     public ResultSet getById(Integer id) throws Exception {
         ResultSet rs = stmt.executeQuery("SELECT * FROM goods where id="+id);
+
         return rs;
     }
 

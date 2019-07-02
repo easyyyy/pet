@@ -80,7 +80,9 @@ public class PetService {
             System.out.println("宠物名："+pet.getName());
             System.out.println("种类："+pet.getTypeName());
             System.out.println("健康："+pet.getHealth());
-            System.out.println("生日："+pet.getBirthday());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            System.out.println("生日："+sdf.format(pet.getBirthday()));
             System.out.println("价格："+pet.getPrice());
             System.out.println("------------------------");
         }
@@ -141,14 +143,21 @@ public class PetService {
         String type = in.next();
         System.out.println("健康：");
         String health = in.next();
-        System.out.println("生日：(YYYY-MM-DD)格式");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        boolean flag = true;
         Date birthday = new Date();
-        try {
-            birthday = sdf.parse(in.next());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        while (flag){
+            try {
+                System.out.println("生日：(YYYY-MM-DD)格式");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                sdf.setLenient(false);
+                birthday = sdf.parse(in.next());
+                flag = false;
+            } catch (ParseException e) {
+                System.out.println("生日日期格式错误！请重新输入");
+            }
         }
+
         System.out.println("可爱值：");
         Integer love = in.nextInt();
         System.out.println("价格：");

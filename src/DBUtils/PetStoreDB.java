@@ -78,9 +78,39 @@ public class PetStoreDB extends Utils implements Connection<PetStore> {
 
     }
 
+    public PetStore getById(Integer id) throws Exception{
+        String sql = "SELECT * FROM pet_store where id=?";
+        ResultSet rs;
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+
+            rs = pstmt.executeQuery();
+            PetStore petStore = new PetStore();
+
+            if (rs.next()){
+
+                petStore.setId(rs.getInt("id"));
+                petStore.setName(rs.getString("name"));
+                petStore.setPassword(rs.getString("password"));
+                petStore.setBalance(rs.getDouble("balance"));
+                pstmt.close();
+                return petStore;
+
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
     @Override
     public int update(PetStore petStore) throws Exception {
-        String sql = "update pet_store set id=?,name=?,password=?,balance=? where id="+petStore.getId();
+        String sql = "update pet_store set name=?,password=?,balance=? where id="+petStore.getId();
         return petStoreSQL(sql,petStore);
     }
 

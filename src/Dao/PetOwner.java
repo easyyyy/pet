@@ -13,11 +13,13 @@ public class PetOwner {
 
     @Override
     public String toString() {
-        return "PetOwnerDB{" +
+        return "PetOwner{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
                 ", petsList=" + petsList +
                 '}';
     }

@@ -1,13 +1,7 @@
 package service;
 
-import DBUtils.DealDB;
-import DBUtils.PetDB;
-import DBUtils.PetOwnerDB;
-import DBUtils.PetStoreDB;
-import Dao.Deal;
-import Dao.Pet;
-import Dao.PetOwner;
-import Dao.PetStore;
+import DBUtils.*;
+import Dao.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,28 +11,62 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+
+
+
 public class PetOwnerService {
     PetOwnerDB petOwnerDB;
     PetDB petDB;
     DealDB dealDB;
-    Scanner in = new Scanner(System.in);
+
+    base base1 = new base();
+    Scanner in = base.in;
+    HospitalService hospitalService = base1.hospitalService;
+    MedicalCertificateDB medicalCertificateDB;
 
     {
         try {
             petOwnerDB = new PetOwnerDB();
             petDB = new PetDB();
-            dealDB = new DealDB();
+            dealDB = base.dealDB;
+//            hospitalService = new HospitalService();
+            medicalCertificateDB = new MedicalCertificateDB();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
+//
+//    public List<PetOwner> substantialize(ResultSet rs){
+//        try {
+//            List<PetOwner> petOwnerList = new ArrayList<>();
+//
+//            while (rs.next()){
+//
+//                PetOwner petOwner = new PetOwner();
+////                good.setId(rs.getInt("id"));
+////                good.setName(rs.getString("name"));
+////                good.setNumber(rs.getInt("number"));
+////                good.setPrice(rs.getDouble("price"));
+////                good.setStoreId(rs.getInt("store_id"));
+////                goodsList.add(good);
+//                petOwner.set
+//
+//            }
+//            return goodsList;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
     public PetOwner setAddress(PetOwner petOwner){
         System.out.println("请输入新地址：");
         String address = in.next();
         petOwner.setAddress(address);
         try {
+
             petOwnerDB.update(petOwner);
             System.out.println("修改成功！");
             return petOwner;
@@ -215,6 +243,7 @@ public class PetOwnerService {
     public void printListPets(List<Pet> pets){
         for (Pet pet:pets){
             System.out.println("------------------------");
+            System.out.println("宠物ID："+pet.getId());
             System.out.println("宠物名："+pet.getName());
             System.out.println("种类："+pet.getTypeName());
             System.out.println("健康："+pet.getHealth());
@@ -231,6 +260,8 @@ public class PetOwnerService {
                 petOwner.setId(rs.getInt("id"));
                 petOwner.setName(rs.getString("name"));
                 petOwner.setBalance(rs.getDouble("balance"));
+                petOwner.setPhone(rs.getString("phone"));
+                petOwner.setAddress(rs.getString("address"));
             }
             System.out.println("昵称："+petOwner.getName());
 
@@ -243,10 +274,100 @@ public class PetOwnerService {
             System.out.println("宠物信息：");
             printListPets(getPetByOwnerId(petOwner.getId()));
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void seekMedicalAttention(PetOwner petOwner){
+        System.out.println("-------------");
+        System.out.println("选择医院：");
+        hospitalService.printAllHospitl();
+        int op = in.nextInt();
+        printListPets(getPetByOwnerId(petOwner.getId()));
+        System.out.println("选择需要就医的宠物ID");
+        int petId = in.nextInt();
+
+        MedicalCertificate medicalCertificate = new MedicalCertificate();
+        medicalCertificate.setPetId(petId);
+        medicalCertificate.setHospitalId(op);
+        medicalCertificate.setPet_owner_id(petOwner.getId());
+        medicalCertificate.setDiagnosis(0);
+        try {
+            medicalCertificateDB.insert(medicalCertificate);
+            System.out.println("宠物已送往医院就医，等待就医");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("-------------");
+    }
+
+    public void printMedicalCertificate(PetOwner petOwner){
+
+
+        try {
+
+            List<MedicalCertificate> medicalCertificateList = base1.medicalCertificateService.substantialize(medicalCertificateDB.getAllByOwnerId(petOwner.getId()));
+
+            for (MedicalCertificate medicalCertificate:medicalCertificateList){
+                ResultSet rs = petOwnerDB.getById(medicalCertificate.getPet_owner_id());
+                Pet pet = base.petService.substantialize(petDB.getById(medicalCertificate.getPetId())).get(0);
+                String petOwnerName = null;
+                String phone = null;
+                String address = null;
+                while (rs.next()){
+                    petOwnerName = rs.getString("name");
+                    phone = rs.getString("phone");
+                    address = rs.getString("address");
+                }
+                System.out.println("-------------");
+                System.out.println("诊断书ID："+medicalCertificate.getId());
+                System.out.println("宠物名字："+pet.getName());
+                System.out.println("宠物主人姓名："+petOwnerName);
+                System.out.println("联系电话："+phone);
+                System.out.println("地址："+address);
+                System.out.println("诊断结果："+medicalCertificate.getDetail());
+                System.out.println("日期："+medicalCertificate.getDate());
+                System.out.println("诊金："+medicalCertificate.getMoney());
+                if (medicalCertificate.getPaid()==0){
+                    System.out.println("状态：未支付");
+                }else {
+                    System.out.println("状态：已支付");
+                }
+
+                System.out.println("-------------");
+            }
+
+            System.out.println("是否支付诊金？（y/N）");
+            String op = in.next();
+            if (op.equals("y")){
+                System.out.println("选择需要支付的诊断书ID：");
+                int id = in.nextInt();
+                MedicalCertificate medicalCertificate1 = null;
+                for (MedicalCertificate medicalCertificate:medicalCertificateList){
+                    if (medicalCertificate.getId()==id){
+                        petOwner.setBalance(petOwner.getBalance()-medicalCertificate.getMoney());
+                        Hospital hospital = hospitalService.substantialize(base1.hospitalDB.getByid(medicalCertificate.getHospitalId())).get(0);
+                        hospital.setBalance(hospital.getBalance()+medicalCertificate.getMoney());
+
+                        petOwnerDB.update(petOwner);
+                        base1.hospitalDB.update(hospital);
+                        System.out.println("支付成功!");
+                        medicalCertificate1 = medicalCertificate;
+                        medicalCertificate1.setPaid(1);
+                        medicalCertificateDB.update(medicalCertificate1);
+                    }
+                }
+                if (medicalCertificate1==null){
+                    System.out.println("支付失败！");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

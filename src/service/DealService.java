@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DealService {
+public class DealService{
 
     DealDB dealDB;
     GoodsService goodsService;
@@ -46,6 +46,7 @@ public class DealService {
                 deal.setAddress(rs.getString("address"));
                 deal.setPhone(rs.getString("phone"));
                 deal.setDealTime(rs.getDate("deal_time"));
+                deal.setNumber(rs.getInt("number"));
                 deal.setSign(rs.getInt("sign"));
                 dealsList.add(deal);
             }
@@ -88,13 +89,14 @@ public class DealService {
 
     public void printListDeal(List<Deal> dealList) throws Exception{
         for (Deal deal:dealList){
+
             System.out.println("");
             System.out.println("");
             System.out.println("====================================================");
             System.out.println("订单ID："+deal.getId());
             System.out.println("订单内容：");
             if (deal.getPetId()==0){
-                goodsService.printGoodInDeal(goodsService.getGoodsById(deal.getGoodsId()));
+                goodsService.printGoodInDeal(goodsService.getGoodsById(deal.getGoodsId()),deal.getNumber());
             }
             if (deal.getGoodsId()==0){
                 petService.printListPets(petService.getPetById(deal.getPetId()));

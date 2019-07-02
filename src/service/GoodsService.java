@@ -33,7 +33,9 @@ public class GoodsService {
     public List<Goods> substantialize(ResultSet rs){
         try {
             List<Goods> goodsList = new ArrayList<>();
+
             while (rs.next()){
+                System.out.println();
                 Goods good = new Goods();
                 good.setId(rs.getInt("id"));
                 good.setName(rs.getString("name"));
@@ -41,6 +43,7 @@ public class GoodsService {
                 good.setPrice(rs.getDouble("price"));
                 good.setStoreId(rs.getInt("store_id"));
                 goodsList.add(good);
+
             }
             return goodsList;
         } catch (Exception e) {
@@ -52,6 +55,7 @@ public class GoodsService {
     public Goods getGoodsById(Integer id){
         try {
             List<Goods> goods = substantialize(goodsDB.getById(id));
+
             Goods good = goods.get(0);
             return good;
         } catch (Exception e) {
@@ -60,11 +64,11 @@ public class GoodsService {
         return null;
     }
 
-    public void printGoodInDeal(Goods goods){
+    public void printGoodInDeal(Goods goods,Integer num){
         System.out.println("    商品ID："+goods.getId());
         System.out.println("    商品名称："+goods.getName());
         System.out.println("    商品价格："+goods.getPrice());
-        System.out.println("    商品数量："+1);
+        System.out.println("    商品数量："+num);
         System.out.println("    销售商家："+petStoreDB.getStoreNameById(goods.getStoreId()));
     }
 
@@ -213,29 +217,39 @@ public class GoodsService {
         }
     }
 
-    public PetOwner buyingGoodsById(PetOwner petOwner,Integer id){
+    public PetOwner buyingGoodsById(PetOwner petOwner,Integer id,Integer num){
         try {
 
             List<Goods> goodsList = substantialize(goodsDB.getById(id));
             Goods goods = goodsList.get(0);
+
             if (goods.getNumber()<1){
                 System.out.println("商品库存不足，请等待商家添加库存！");
                 return petOwner;
             }
-            goods.setNumber(goods.getNumber()-1);
-            petOwner.setBalance(petOwner.getBalance()-goods.getPrice());
+            goods.setNumber(goods.getNumber()-num);
+            if (petOwner.getBalance()-goods.getPrice()*num<0){
+                System.out.println("余额不足！请充值");
+                return petOwner;
+            }
+            petOwner.setBalance(petOwner.getBalance()-goods.getPrice()*num);
+            PetStore petStore = petStoreDB.getById(goods.getStoreId());
+            petStore.setBalance(petStore.getBalance()+goods.getPrice()*num);
+            petStoreDB.update(petStore);
             goodsDB.update(goods);
+
             petOwnerDB.update(petOwner);
             Deal deal = new Deal();
             deal.setDealType(1);
             deal.setBuyerId(petOwner.getId());
             deal.setSellerId(goods.getStoreId());
             deal.setGoodsId(goods.getId());
-            deal.setPrice(goods.getPrice());
+            deal.setPrice(goods.getPrice()*num);
             deal.setAddress(petOwner.getAddress());
             deal.setPhone(petOwner.getPhone());
+            deal.setNumber(num);
             dealDB.insert(deal);
-
+            System.out.println("购买成功！");
             return petOwner;
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,7 +13,7 @@ public class DealDB extends Utils implements Connection<Deal> {
 
     @Override
     public int insert(Deal deal) throws Exception {
-        String sql = "insert into deal (deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time,address,phone,sign) values(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into deal (deal_type,pet_id,goods_id,seller_id,buyer_id,price,deal_time,address,phone,sign,number) values(?,?,?,?,?,?,?,?,?,?,?)";
         return dealSQL(sql,deal);
     }
 
@@ -40,7 +40,7 @@ public class DealDB extends Utils implements Connection<Deal> {
 
     @Override
     public int update(Deal deal) throws Exception {
-        String sql = "update deal set deal_type=?,pet_id=?,goods_id=?,seller_id=?,buyer_id=?,price=?,deal_time=?,address=?,phone=?,sign=? where id="+deal.getId();
+        String sql = "update deal set deal_type=?,pet_id=?,goods_id=?,seller_id=?,buyer_id=?,price=?,deal_time=?,address=?,phone=?,sign=?,number=? where id="+deal.getId();
         return dealSQL(sql,deal);
     }
 

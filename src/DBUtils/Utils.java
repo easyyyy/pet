@@ -55,6 +55,7 @@ public class Utils {
             pstmt.setString(8, deal.getAddress());
             pstmt.setString(9, deal.getPhone());
             pstmt.setInt(10, deal.getSign());
+            pstmt.setInt(11,deal.getNumber());
             i = pstmt.executeUpdate();
 
             pstmt.close();

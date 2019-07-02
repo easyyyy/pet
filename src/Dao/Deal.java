@@ -14,8 +14,27 @@ public class Deal {
     private String address;
     private String phone;
     private Integer sign = 0;
+    private Integer number = 1;
 
     public Deal() {
+    }
+
+    @Override
+    public String toString() {
+        return "Deal{" +
+                "id=" + id +
+                ", dealType=" + dealType +
+                ", petId=" + petId +
+                ", sellerId=" + sellerId +
+                ", goodsId=" + goodsId +
+                ", buyerId=" + buyerId +
+                ", price=" + price +
+                ", dealTime=" + dealTime +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sign=" + sign +
+                ", number=" + number +
+                '}';
     }
 
     public Deal(Integer id, Integer  dealType, Integer petId, Integer sellerId, Integer goodsId, Integer buyerId, Double price, Date dealTime) {
@@ -27,20 +46,6 @@ public class Deal {
         this.buyerId = buyerId;
         this.price = price;
         this.dealTime = dealTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Deal{" +
-                "id=" + id +
-                ", dealType='" + dealType + '\'' +
-                ", petId=" + petId +
-                ", sellerId=" + sellerId +
-                ", goodsId=" + goodsId +
-                ", buyerId=" + buyerId +
-                ", price=" + price +
-                ", dealTime=" + dealTime +
-                '}';
     }
 
     public String getAddress() {
@@ -129,5 +134,13 @@ public class Deal {
 
     public void setSign(Integer sign) {
         this.sign = sign;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
