@@ -26,7 +26,7 @@ public class GoodsService {
             petOwnerDB = new PetOwnerDB();
             dealDB = new DealDB();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -47,7 +47,7 @@ public class GoodsService {
             }
             return goodsList;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -59,17 +59,19 @@ public class GoodsService {
             Goods good = goods.get(0);
             return good;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
 
     public void printGoodInDeal(Goods goods,Integer num){
+        System.out.println("-----------------");
         System.out.println("    商品ID："+goods.getId());
         System.out.println("    商品名称："+goods.getName());
         System.out.println("    商品价格："+goods.getPrice());
         System.out.println("    商品数量："+num);
         System.out.println("    销售商家："+petStoreDB.getStoreNameById(goods.getStoreId()));
+        System.out.println("-----------------");
     }
 
     public void addGood(PetStore petStore){
@@ -90,7 +92,7 @@ public class GoodsService {
             goodsDB.insert(good);
             System.out.println("新增商品成功!");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -108,7 +110,7 @@ public class GoodsService {
                 System.out.println("添加失败!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -151,7 +153,7 @@ public class GoodsService {
                 System.out.println("修改失败!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -168,7 +170,7 @@ public class GoodsService {
             goodsDB.deleteById(id);
             System.out.println("商品下架成功！");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -179,7 +181,7 @@ public class GoodsService {
             ResultSet rs = goodsDB.getAll();
             return substantialize(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -189,31 +191,31 @@ public class GoodsService {
             ResultSet rs = goodsDB.getGoodsByStoreId(id);
             return substantialize(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
 
     public void printGoodsByStoreId(PetStore petStore){
         for (Goods goods:getGoodsByStoreId(petStore.getId())){
-            System.out.println("------------");
+            System.out.println("-----------------");
             System.out.println("    商品ID："+goods.getId());
             System.out.println("    商品名称："+goods.getName());
             System.out.println("    商品价格："+goods.getPrice());
             System.out.println("    商品库存："+goods.getNumber());
-            System.out.println("------------");
+            System.out.println("-----------------");
         }
     }
 
     public void printAllGoods(){
         for (Goods goods:getAllGoods()){
-            System.out.println("------------");
+            System.out.println("-----------------");
             System.out.println("    商品ID："+goods.getId());
             System.out.println("    商品名称："+goods.getName());
             System.out.println("    商品价格："+goods.getPrice());
             System.out.println("    商品库存："+goods.getNumber());
             System.out.println("    销售商家："+petStoreDB.getStoreNameById(goods.getId()));
-            System.out.println("------------");
+            System.out.println("-----------------");
         }
     }
 
@@ -252,7 +254,7 @@ public class GoodsService {
             System.out.println("购买成功！");
             return petOwner;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return petOwner;
     }

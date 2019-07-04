@@ -20,7 +20,7 @@ public class PetStoreService {
         try {
             petStoreDB = new PetStoreDB();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -38,7 +38,7 @@ public class PetStoreService {
             }
             return petStoreList;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -67,7 +67,7 @@ public class PetStoreService {
             }
             System.out.println("注册失败！");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -86,7 +86,7 @@ public class PetStoreService {
             }
             System.out.println("登陆失败！");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -104,11 +104,12 @@ public class PetStoreService {
                 pet.setTypeName(rs.getString("type_name"));
                 pet.setPrice(rs.getDouble("price"));
                 pet.setHealth(rs.getString("health"));
+                pet.setStoreId(rs.getInt("store_id"));
                 pets.add(pet);
             }
             return pets;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -116,15 +117,21 @@ public class PetStoreService {
     public List<Pet> printNotSellPet(Integer storeId){
         List<Pet> pets = getNotSellPets(storeId);
 
+        if (pets.size()==0){
+            System.out.println("");
+            System.out.println("该商店暂无宠物销售");
+            System.out.println("");
+        }
+
         for (Pet pet:pets){
-            System.out.println("------------------------");
+            System.out.println("-------------");
             System.out.println("    宠物ID:"+pet.getId());
             System.out.println("    宠物名："+pet.getName());
             System.out.println("    种类："+pet.getTypeName());
             System.out.println("    健康："+pet.getHealth());
             System.out.println("    生日："+pet.getBirthday());
             System.out.println("    价格："+pet.getPrice());
-            System.out.println("------------------------");
+            System.out.println("-------------");
         }
         return pets;
     }
@@ -153,7 +160,7 @@ public class PetStoreService {
                     }
                     System.out.println("修改成功!");
                 } catch (Exception e) {
-                    e.printStackTrace();
+
                 }
             }
         }
@@ -177,7 +184,7 @@ public class PetStoreService {
             }
             System.out.println("提现成功！");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return petStore;
     }

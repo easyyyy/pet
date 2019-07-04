@@ -35,7 +35,7 @@ public class HospitalService{
             petDB = new PetDB();
             petService = new PetService();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -52,7 +52,7 @@ public class HospitalService{
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
         return hospitalList;
     }
@@ -81,7 +81,7 @@ public class HospitalService{
                     }
                     System.out.println("修改成功!");
                 } catch (Exception e) {
-                    e.printStackTrace();
+
                 }
             }
         }
@@ -100,7 +100,7 @@ public class HospitalService{
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -149,7 +149,7 @@ public class HospitalService{
         try {
             i = hospitalDB.insert(hospital);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("该医院名已注册，请更换");
         }
         if (i==1){
             System.out.println("注册成功！");
@@ -178,7 +178,7 @@ public class HospitalService{
                     phone = rs.getString("phone");
                     address = rs.getString("address");
                 }
-                System.out.println("----------");
+                System.out.println("-----------------");
                 System.out.println("诊断书ID："+medicalCertificate.getId());
                 System.out.println("宠物名字："+pet.getName());
                 System.out.println("宠物主人姓名："+petOwnerName);
@@ -186,7 +186,7 @@ public class HospitalService{
                 System.out.println("地址："+address);
                 System.out.println("诊断结果："+medicalCertificate.getDetail());
                 System.out.println("日期："+medicalCertificate.getDate());
-                System.out.println("----------");
+                System.out.println("-----------------");
             }
 
             System.out.println("是否进行诊断？（y/N）");
@@ -219,7 +219,7 @@ public class HospitalService{
                 return;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -242,7 +242,7 @@ public class HospitalService{
                     phone = rs.getString("phone");
                     address = rs.getString("address");
                 }
-                System.out.println("----------");
+                System.out.println("-----------------");
                 System.out.println("诊断书ID："+medicalCertificate.getId());
                 System.out.println("宠物名字："+pet.getName());
                 System.out.println("宠物主人姓名："+petOwnerName);
@@ -256,11 +256,11 @@ public class HospitalService{
                     System.out.println("状态：已支付");
                 }
                 System.out.println("日期："+medicalCertificate.getDate());
-                System.out.println("----------");
+                System.out.println("-----------------");
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 

@@ -31,20 +31,25 @@ public class Main {
 
         List<PetStore> petStoreList = petStoreService.getAllStore();
         List<Pet> petList = new ArrayList<>();
-        while (true){
-            for (PetStore petStore:petStoreList){
-                System.out.println("-------------");
-                System.out.println("商店名："+petStore.getName());
 
-                petList.addAll(petStoreService.printNotSellPet(petStore.getId()));
-                System.out.println("-------------");
-            }
+        for (PetStore petStore:petStoreList){
+            System.out.println("");
+            System.out.println("-------------");
+            System.out.println("商店名："+petStore.getName());
+
+            petList.addAll(petStoreService.printNotSellPet(petStore.getId()));
+            System.out.println("-------------");
+            System.out.println("");
+        }
+
+        while (true){
             System.out.println("请输入要购买的宠物ID或输入0退出");
             int op = in.nextInt();
             if (op==0){
                 break;
             }
             petOwnerService.buyingPet(loginPetOwner,petService.getByIdFromList(petList,op));
+
         }
     }
 
@@ -77,7 +82,10 @@ public class Main {
             System.out.println("10.退出");
             System.out.println("-----------------");
 
+
             int op = in.nextInt();
+
+
             switch (op){
                 case 1:
                     petOwnerService.getInfoById(loginPetOwner.getId());
@@ -287,8 +295,8 @@ public class Main {
             System.out.println("-----------------");
             System.out.println("1.用户注册");
             System.out.println("2.商店注册");
-            System.out.println("2.医院注册");
-            System.out.println("3.返回");
+            System.out.println("3.医院注册");
+            System.out.println("4.返回");
             System.out.println("-----------------");
 
             int op = in.nextInt();
@@ -318,7 +326,7 @@ public class Main {
             System.out.println("1.登录");
             System.out.println("2.注册");
             System.out.println("3.退出");
-
+            System.out.println("请输入操作数：");
             int op = in.nextInt();
             switch (op){
                 case 1:

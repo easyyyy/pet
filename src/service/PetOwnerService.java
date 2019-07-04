@@ -3,6 +3,7 @@ package service;
 import DBUtils.*;
 import Dao.*;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -28,7 +29,8 @@ public class PetOwnerService {
         try {
             petOwnerDB = new PetOwnerDB();
             petDB = new PetDB();
-            dealDB = base.dealDB;
+            dealDB = new DealDB();
+//            dealDB = base1.dealDB;
 //            hospitalService = new HospitalService();
             medicalCertificateDB = new MedicalCertificateDB();
         } catch (Exception e) {
@@ -71,7 +73,7 @@ public class PetOwnerService {
             System.out.println("修改成功！");
             return petOwner;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -85,7 +87,7 @@ public class PetOwnerService {
             System.out.println("修改成功！");
             return petOwner;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -107,7 +109,7 @@ public class PetOwnerService {
                 return s;
             }
         }catch (Exception e){
-            e.printStackTrace();
+
             System.out.println("用户名或密码错误！");
         }
         return null;
@@ -153,7 +155,7 @@ public class PetOwnerService {
             petOwner.setBalance(petOwner.getBalance()+money);
             return petOwner;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return petOwner;
     }
@@ -176,7 +178,9 @@ public class PetOwnerService {
         }
         petOwner.setBalance(petOwner.getBalance()-pet.getPrice());
         try {
+
             petDB.update(pet);
+
             dealDB.insert(deal);
             int i = petOwnerDB.update(petOwner);
             if (i!=1){
@@ -184,7 +188,7 @@ public class PetOwnerService {
             }
             System.out.println("购买成功");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -212,7 +216,7 @@ public class PetOwnerService {
             }
             System.out.println("购买成功");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -235,20 +239,20 @@ public class PetOwnerService {
                 pets.add(pet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
         return pets;
     }
 
     public void printListPets(List<Pet> pets){
         for (Pet pet:pets){
-            System.out.println("------------------------");
+            System.out.println("-----------------");
             System.out.println("宠物ID："+pet.getId());
             System.out.println("宠物名："+pet.getName());
             System.out.println("种类："+pet.getTypeName());
             System.out.println("健康："+pet.getHealth());
             System.out.println("生日："+pet.getBirthday());
-            System.out.println("------------------------");
+            System.out.println("-----------------");
         }
     }
 
@@ -276,14 +280,14 @@ public class PetOwnerService {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
 
 
     }
 
     public void seekMedicalAttention(PetOwner petOwner){
-        System.out.println("-------------");
+        System.out.println("-----------------");
         System.out.println("选择医院：");
         hospitalService.printAllHospitl();
         int op = in.nextInt();
@@ -302,7 +306,7 @@ public class PetOwnerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("-------------");
+        System.out.println("-----------------");
     }
 
     public void printMedicalCertificate(PetOwner petOwner){
@@ -323,7 +327,7 @@ public class PetOwnerService {
                     phone = rs.getString("phone");
                     address = rs.getString("address");
                 }
-                System.out.println("-------------");
+                System.out.println("-----------------");
                 System.out.println("诊断书ID："+medicalCertificate.getId());
                 System.out.println("宠物名字："+pet.getName());
                 System.out.println("宠物主人姓名："+petOwnerName);
@@ -338,7 +342,7 @@ public class PetOwnerService {
                     System.out.println("状态：已支付");
                 }
 
-                System.out.println("-------------");
+                System.out.println("-----------------");
             }
 
             System.out.println("是否支付诊金？（y/N）");

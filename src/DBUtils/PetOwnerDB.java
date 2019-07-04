@@ -37,7 +37,7 @@ public class PetOwnerDB extends Utils implements Connection<PetOwner> {
 
             pstmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("该用户名已注册，请更换");
         }
         return i;
     }

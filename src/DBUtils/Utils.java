@@ -33,7 +33,7 @@ public class Utils {
 
             pstmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("该商店名已注册，请更换");
         }
         return i;
     }

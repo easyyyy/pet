@@ -20,7 +20,7 @@ public class PetService {
         try {
             petDB = new PetDB();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -41,7 +41,7 @@ public class PetService {
                 pets.add(pet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
         return pets;
     }
@@ -69,22 +69,22 @@ public class PetService {
             List<Pet> pets = substantialize(petDB.getById(id));
             return pets;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
 
     public void printListPets(List<Pet> pets){
         for (Pet pet:pets){
-            System.out.println("------------------------");
-            System.out.println("宠物名："+pet.getName());
-            System.out.println("种类："+pet.getTypeName());
-            System.out.println("健康："+pet.getHealth());
+            System.out.println("-----------------");
+            System.out.println("    宠物名："+pet.getName());
+            System.out.println("    种类："+pet.getTypeName());
+            System.out.println("    健康："+pet.getHealth());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            System.out.println("生日："+sdf.format(pet.getBirthday()));
-            System.out.println("价格："+pet.getPrice());
-            System.out.println("------------------------");
+            System.out.println("    生日："+sdf.format(pet.getBirthday()));
+            System.out.println("    价格："+pet.getPrice());
+            System.out.println("-----------------");
         }
     }
 
@@ -130,7 +130,7 @@ public class PetService {
             }
             System.out.println("更新成功");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -178,7 +178,7 @@ public class PetService {
             }
             System.out.println("添加成功");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -198,7 +198,7 @@ public class PetService {
             }
             System.out.println("删除成功！");
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }

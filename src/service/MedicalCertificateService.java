@@ -16,7 +16,7 @@ public class MedicalCertificateService {
         try {
             medicalCertificateDB = new MedicalCertificateDB();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -38,7 +38,7 @@ public class MedicalCertificateService {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
         return medicalCertificateList;
     }

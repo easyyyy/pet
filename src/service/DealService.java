@@ -52,7 +52,7 @@ public class DealService{
             }
             return dealsList;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -63,7 +63,7 @@ public class DealService{
             List<Deal> dealList = substantialize(rs);
             return dealList;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class DealService{
             List<Deal> dealList = substantialize(rs);
             return dealList;
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -83,7 +83,7 @@ public class DealService{
         try {
             printListDeal(getDealByStoreId(petStore.getId()));
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -92,7 +92,7 @@ public class DealService{
 
             System.out.println("");
             System.out.println("");
-            System.out.println("====================================================");
+            System.out.println("-----------------");
             System.out.println("订单ID："+deal.getId());
             System.out.println("订单内容：");
             if (deal.getPetId()==0){
@@ -112,7 +112,7 @@ public class DealService{
             else {
                 System.out.println("已签收");
             }
-            System.out.println("====================================================");
+            System.out.println("-----------------");
             System.out.println("");
             System.out.println("");
         }

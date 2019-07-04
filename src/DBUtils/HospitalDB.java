@@ -28,7 +28,7 @@ public class HospitalDB extends Utils implements Connection<Hospital> {
 
             pstmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("该医院名已注册，请更换");
         }
         return i;
 
